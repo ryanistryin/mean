@@ -50,26 +50,16 @@ db.once('open', function callback() {
 });
 
 
-var messageSchema = mongoose.Schema({message: String});
-var Message = mongoose.model('Message',messageSchema);
-var mongoMessage;
-Message.findOne().exec(function(err, messageDoc) {
-	mongoMessage = messageDoc.message;
-});
-
-
-
 
 
 //render angular partails
-app.get('/partials/:partialPath', function (req,res) {
-	res.render('partials/' + req.params.partialPath)
+app.get('/partials/*', function (req,res) {
+	res.render('../../public/app/' + req.params[0])
 });
 
 //make every request go to index file
 app.get('*',function(req,res) {
 	res.render('index', {
-		mongoMessage: mongoMessage
 	});
 });
 
